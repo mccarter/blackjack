@@ -6,8 +6,20 @@ class window.AppView extends Backbone.View
   '
 
   events:
-    'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('playerHand').stand()
+    'click .hit-button': ->
+    # check player score at position 0. If scrore is less than 21, enable 'hit'
+      if @model.get('playerHand').scores()[0] < 21
+        @model.get('playerHand').hit()
+       #if the score is = 21, alert "21!" and compare to dealer score
+        if @model.get('playerHand').scores()[0] is 21 or @model.get('playerHand').scores()[1] is 21
+          alert "21!"
+          @model.trigger('dealerCheck')
+    # else, alert game over. Reset app
+      else
+        alert "BUST!"
+    'click .stand-button': ->
+      #call dealer check when the stand button is clicked. Dealer check
+      @model.trigger('dealerCheck')
 
   initialize: ->
     @render()
