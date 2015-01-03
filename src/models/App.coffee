@@ -9,27 +9,31 @@ class window.App extends Backbone.Model
     @on 'playerMove', @playerMove
 
   dealerMove: ->
-  #get dealer's current score
-    dealerScore = @get('dealerHand').scores()[0]
+  #get dealer's current score. We need to flip the card to access it's value
+    @get('dealerHand').models[0].flip()
+    dealerScores = @get('dealerHand').scores()
   #while dealer score is less than 17, call hit
-    while dealerScore < 17
+    while dealerScores[0] < 17
       @get('dealerHand').hit()
-      dealerScore = @get('dealerHand').scores()[0]
-      if dealerScore > 21
+      dealerScores = @get('dealerHand').scores()
+      if dealerScores[0] > 21
         @trigger "victory"
         @initialize()
+      if dealerScores[1] is 21
+        @trigger "loss"
+        @initialize()
     #after loop, fetch dealer and player scores
-    playerScore = @get('playerHand').scores()
+    playerScores = @get('playerHand').scores()
     #if player has greater score, alert win
-    @get('dealerHand').models[0].flip()
-    if playerScore[0] > dealerScore[0] or playerScore[1] > dealerScore[1]
+    #@get('dealerHand').models[0].flip()
+    if playerScores[0] > dealerScores[0]
       @trigger "victory"
       @initialize()
     #else, dealer wins
-    if playerScore[0] is dealerScore[0] or playerScore[1] is dealerScore[1]
+    if playerScores[0] is dealerScores[0]
       @trigger "draw"
       @initialize()
-    else
+    if playerScores[0] < dealerScores[0]
       @trigger "loss"
       @initialize()
     #reveal dealer's hand, call flip on first card in dealer hand array
