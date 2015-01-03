@@ -18,3 +18,12 @@
 img {
   width: 100%;
 }
+
+body {
+background: url('../img/background.jpg');
+
+}
+
+.center {
+  margin: auto;
+}
