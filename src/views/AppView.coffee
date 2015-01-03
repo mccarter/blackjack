@@ -17,23 +17,23 @@ class window.AppView extends Backbone.View
     @render()
     @model.on 'change', @render, @
     @model.on 'bust', ->
+        #debugger
         alert "BUST!"
-        @render()
       , @
 
     @model.on 'victory', ->
+        # debugger
         alert "VICTORY!"
-        @render()
       , @
 
     @model.on 'draw', ->
+        # debugger
         alert "draw"
-        @render()
       , @
 
     @model.on 'loss', ->
+        # debugger
         alert "You lose!"
-        @render()
       , @
 
   render: ->
