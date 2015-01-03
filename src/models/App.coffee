@@ -7,7 +7,7 @@ class window.App extends Backbone.Model
     @set 'dealerHand', deck.dealDealer()
     @on 'dealerMove', @dealerMove, this
     @on 'playerMove', @playerMove, this
-    if @get('playerHand').scores()[0] is 21 or @get('playerHand').scores()[1] is 21
+    if @get('playerHand').scores()[1] is 21
       @trigger "victory"
 
   newGame: ->
