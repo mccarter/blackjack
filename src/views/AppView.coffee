@@ -1,6 +1,6 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
+    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="new-game">New Game</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -13,26 +13,33 @@ class window.AppView extends Backbone.View
       #call dealer check when the stand button is clicked. Dealer check
       @model.trigger('dealerMove')
 
+    'click .new-game': ->
+      @model.trigger('new-game')
+
   initialize: ->
     @render()
     @model.on 'change', @render, @
     @model.on 'bust', ->
-        #debugger
+         # debugger
+        @render()
         alert "BUST!"
       , @
 
     @model.on 'victory', ->
-        # debugger
+         # debugger
+        @render()
         alert "VICTORY!"
       , @
 
     @model.on 'draw', ->
-        # debugger
+         # debugger
+        @render()
         alert "draw"
       , @
 
     @model.on 'loss', ->
-        # debugger
+         # debugger
+        @render()
         alert "You lose!"
       , @
 
