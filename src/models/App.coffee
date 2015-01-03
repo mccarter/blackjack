@@ -5,9 +5,10 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-    @on 'dealerCheck', @dealerCheck
+    @on 'dealerMove', @dealerMove
+    @on 'playerMove', @playerMove
 
-  dealerCheck: ->
+  dealerMove: ->
   #get dealer's current score
     dealerScore = @get('dealerHand').scores()[0]
   #while dealer score is less than 17, call hit
@@ -15,13 +16,35 @@ class window.App extends Backbone.Model
       @get('dealerHand').hit()
       dealerScore = @get('dealerHand').scores()[0]
       if dealerScore > 21
-        alert "You win!"
+        @trigger "victory"
+        @initialize()
     #after loop, fetch dealer and player scores
-    playerScores = @get('playerHand').scores()
+    playerScore = @get('playerHand').scores()
     #if player has greater score, alert win
-    if playerScores[0] > dealerScore[0] or playerScores[1] > dealerScore[1]
-      alert "You win!"
+    @get('dealerHand').models[0].flip()
+    if playerScore[0] > dealerScore[0] or playerScore[1] > dealerScore[1]
+      @trigger "victory"
+      @initialize()
     #else, dealer wins
-    else alert "Dealer wins!"
+    if playerScore[0] is dealerScore[0] or playerScore[1] is dealerScore[1]
+      @trigger "draw"
+      @initialize()
+    else
+      @trigger "loss"
+      @initialize()
     #reveal dealer's hand, call flip on first card in dealer hand array
-    @get.dealerHand[0].flip()
+
+  playerMove: ->
+    # check player score at position 0. If scrore is less than 21, enable 'hit'
+    if @get('playerHand').scores()[0] < 21
+      @get('playerHand').hit()
+      if @get('playerHand').scores()[0] > 21
+        @trigger "bust"
+        @initialize()
+     #if the score is = 21, alert "21!" and compare to dealer score
+      if @get('playerHand').scores()[0] is 21 or @get('playerHand').scores()[1] is 21
+        @dealerMove()
+  # else, alert game over. Reset app
+    else
+      @trigger "bust"
+      @initialize()
