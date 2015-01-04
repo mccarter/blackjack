@@ -202,7 +202,7 @@
         // If getModal returns values then continue
         modalDependant.apply(this, args);
     } else {
-        // If getModal returns null i.e. no matches, then set up a interval event to check the return value until it is not null	
+        // If getModal returns null i.e. no matches, then set up a interval event to check the return value until it is not null
         var modalCheckInterval = setInterval(function() {
           if (getModal() !== null) {
             clearInterval(modalCheckInterval);
@@ -211,7 +211,7 @@
       }, 100);
     }
   };
-        
+
   function modalDependant() {
 
     if (arguments[0] === undefined) {
@@ -565,8 +565,8 @@
       $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
       show($customIcon);
 
-      var _imgWidth  = 80,
-          _imgHeight = 80;
+      var _imgWidth  = 150,
+          _imgHeight = 150;
 
       if (params.imageSize) {
         var imgWidth  = params.imageSize.split('x')[0];
