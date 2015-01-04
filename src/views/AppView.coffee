@@ -28,7 +28,7 @@ class window.AppView extends Backbone.View
     @model.on 'bust', ->
          # debugger
         @render()
-        alert "BUST!"
+        swal "Here's a message!", "It's pretty, isn't it?"
       , @
 
     @model.on 'victory', ->

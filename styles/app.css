@@ -1,8 +1,6 @@
 .card {
   float: left;
-  border: solid 1px black;
   width: 150px;
-  border-radius: 5px;
   height: 210px;
   margin-right: 20px;
 }
@@ -26,4 +24,8 @@ background: url('../img/background.jpg');
 
 .center {
   margin: auto;
+}
+
+.buttons {
+  padding-top: 25px;
 }
